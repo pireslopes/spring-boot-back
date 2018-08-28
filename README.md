@@ -1,1 +1,1 @@
-# curso-spring-boot
+# spring-boot
