@@ -19,10 +19,10 @@ import com.pires.curso.services.UserService;
 @RestController
 @RequestMapping(value = "/auth")
 public class AuthResource {
-	
+
 	@Autowired
 	private JWTUtil jWTUtil;
-	
+
 	@Autowired
 	private AuthService authService;
 
@@ -31,12 +31,13 @@ public class AuthResource {
 		UserSS user = UserService.authenticated();
 		String token = jWTUtil.generateToken(user.getUsername());
 		response.addHeader("Authorization", "Bearer " + token);
+		response.addHeader("access-control-expose-headers", "Authorization");
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
 	public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDto dto) {
-		authService.sendNewPasswordEmail(dto.getEmail());		
+		authService.sendNewPasswordEmail(dto.getEmail());
 		return ResponseEntity.noContent().build();
 	}
 }
